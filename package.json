@@ -1,8 +1,12 @@
 {
   "name": "node-errors-helpers",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Some helpers for better error handling in Node.js",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
+  "files": [
+    "lib",
+    "src"
+  ],
   "scripts": {
     "clean": "rimraf lib",
     "lint": "eslint src test",
