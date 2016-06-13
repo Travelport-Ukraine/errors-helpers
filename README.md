@@ -1,4 +1,4 @@
-# ⚠ Errors Helpers
+# ⚠ Errors Helpers [![Build Status](https://travis-ci.org/Travelport-Ukraine/errors-helpers.svg?branch=master)](https://travis-ci.org/Travelport-Ukraine/errors-helpers)
 
 Current lib helps with error handling in Node.
 It provides few helpers that makes life easier. If you want error handling and creation be easy use this lib.
