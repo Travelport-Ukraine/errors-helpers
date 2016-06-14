@@ -7,6 +7,24 @@ It provides few helpers that makes life easier. If you want error handling and c
 
 Run `npm install --save node-errors-helpers`
 
+## Example
+
+Simple usage of this lib.
+
+```javascript
+const e = require('node-errors-helpers');
+const StarWarsErrors = e.generate({
+    'NO_LUKE': 'No Luke Skywalker!',
+    'NO_DARTH': 'No Darth Vader!',
+    'YOUR_FATHER': 'I am you father, Luke!',
+  }, 
+  Error);
+
+throw new StartWarsErrors.YOUR_FATHER({ /* additional data */ });
+throw new StartWarsErrors.NO_LUKE({ far: 'away' }, CasedByError /* some error */);
+```
+
+
 ## API
 
 * [get(error)](#getError) ⇒ <code>Object</code>
