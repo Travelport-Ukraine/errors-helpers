@@ -5,14 +5,14 @@ export const get = getErrorCommon;
 
 export function generate(list, extend, customFields = ['data'], getError = getErrorCommon) {
   const returnErrors = {};
-  Object.keys(list).map(k => {
+  Object.keys(list).map((k) => {
     const name = transformName(k);
     returnErrors[k] = (function createError(extendClass, className, message, code) {
       const err = errors.helpers.generateClass(className, {
         extends: extendClass,
         args: customFields.concat(['inner_error']),
         generateMessage() {
-          return `${extendClass.name}. ${code}: ${message}`;
+          return `${extendClass.name}.${code}: ${message}`;
         },
       });
       err.prototype.code = code;
