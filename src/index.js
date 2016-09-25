@@ -12,7 +12,7 @@ export function generate(list, extend, customFields = ['data'], getError = getEr
         extends: extendClass,
         args: customFields.concat(['inner_error']),
         generateMessage() {
-          return `${extendClass.name}. ${code}: ${message}`;
+          return `${extendClass.name}.${code}: ${message}`;
         },
       });
       err.prototype.code = code;
