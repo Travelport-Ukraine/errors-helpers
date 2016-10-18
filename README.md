@@ -1,11 +1,11 @@
-   # ⚠ Errors Helpers [![Build Status](https://travis-ci.org/Travelport-Ukraine/errors-helpers.svg?branch=master)](https://travis-ci.org/Travelport-Ukraine/errors-helpers)
+# ⚠ Errors Helpers [![Build Status](https://travis-ci.org/Travelport-Ukraine/errors-helpers.svg?branch=master)](https://travis-ci.org/Travelport-Ukraine/errors-helpers)
 
 Current lib helps with error handling in Node.
 It provides few helpers that makes life easier. If you want error handling and creation be easy use this lib.
  
 ## Installation
 
-Run `npm install --save node-errors-helpers`
+Run `npm install --save errors-helpers`
 
 ## Example
 
@@ -114,7 +114,7 @@ For better errors representation in JSON format.
 | error | <code>CustomError</code> | CustomError |
 
 
-<a name="object"></a>
+<a name="fullstack"></a>
 ### helpers.getFullStack(error)
 
 Recursivly gets stacks from `causedBy` errors and return `Array` of them.
