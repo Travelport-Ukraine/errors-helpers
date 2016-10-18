@@ -1,37 +1,32 @@
-var m = require('../lib');
+const { createErrorClass, createErrorsList, helpers } = require('../');
 
-var list = {
-  NO_MONEY: 'There is no money at this account',
-  TIMEOUT: 'Timeout reached.'
-};
+const RuntimeError = createErrorClass('RuntimeError', 'Error during validation.', Error);
+const ValidationError = createErrorClass('ValidationError', 'Error during validation.', Error);
 
-var list2 = {
-  NO_COCA_COLA: 'No coke in bar.',
-  NO_FANTA: 'No fanta in bar.',
-  NO_SPRITE: 'No sprite in bar.',
-};
+const UserValidationError = createErrorClass(
+  'UserValidationError',
+  'Error during user validation.',
+  ValidationError
+);
 
-var PayGateError = m.lib.helpers.generateClass('PayGateError', {
-  extends: Error,
-});
+const UserValidationErrors = createErrorsList({
+  NO_NAME: 'Please specify name.',
+  NO_LOGIN: 'Please specify login.',
+}, UserValidationError);
 
-var BarError = m.lib.helpers.generateClass('BarError', {
-  extends: PayGateError,
-});
 
-var PayGateErrors = m.generate(list, PayGateError);
-var BarErrors = m.generate(list2, BarError);
-
-try {
-  throw new PayGateErrors.NO_MONEY({ balance: 0 });
-} catch(e) {
-  // error has data attribute with prop balance
-  e instanceof PayGateError;
+try{
   try {
-    throw new BarErrors.NO_FANTA(null, e);
-  } catch(e2) {
-    e2 instanceof BarError // true
-    e2 instanceof PayGateError // true
-    e2.inner_error // NoMoneyError
+    throw new UserValidationErrors.NO_NAME({ user: { name: null } });
+  } catch (e) {
+    // e instanceof UserValidationError; // true
+    // e instanceof ValidationError; // true
+    // e instanceof Error; // true
+    // e instanceof RuntimeError; // false
+    throw new RuntimeError(null, e);
   }
+} catch (e) {
+  // e instanceof RuntimeError; // true
+  helpers.hasErrorClass(e, ValidationError); // true
 }
+
