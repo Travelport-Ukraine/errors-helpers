@@ -196,5 +196,17 @@ describe('Helpers', () => {
       expect(eo.message).to.equal(BARTENDER_ERROR_MESSAGE);
       expect(eo.stack).to.be.ok;
     });
+    it('should return object with causedBy field', () => {
+      const data = { name: 'value' };
+      const BarError = createErrorClass('BarError', BAR_ERROR_MESSAGE);
+      const BartenderError = createErrorClass('BartenderError', BARTENDER_ERROR_MESSAGE, BarError);
+      const someError = new BarError();
+      const eo = getErrorObject(new BartenderError(data, someError));
+      expect(eo).to.be.an('object');
+      expect(eo).to.have.keys(['causedBy', 'name', 'message', 'stack', 'data']);
+      expect(eo.causedBy).to.ok;
+      expect(eo.causedBy.name).to.equal('Error.BarError');
+
+    });
   });
 });
