@@ -2,12 +2,14 @@
   "name": "node-errors-helpers",
   "version": "0.1.0",
   "description": "Some helpers for better error handling in Node.js",
-  "main": "./index.js",
+  "main": "index.js",
   "files": [
-    "src"
+    "src",
+    "index.js"
   ],
   "scripts": {
     "lint": "eslint src test",
+    "cover": "istanbul cover _mocha --recursive",
     "test": "mocha --recursive",
     "test:examples": "node examples/",
     "prepublish": "npm run lint && npm run test"
@@ -29,9 +31,10 @@
     "chai": "^3.5.0",
     "eslint": "^3.6.0",
     "eslint-config-airbnb": "^12.0.0",
-    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
-    "mocha": "^3.0.2"
+    "mocha": "^3.0.2",
+    "istanbul": "^0.4.5"
   }
 }
