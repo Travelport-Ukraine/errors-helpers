@@ -15,7 +15,7 @@ const UserValidationErrors = createErrorsList({
 }, UserValidationError);
 
 
-try{
+try {
   try {
     throw new UserValidationErrors.NO_NAME({ user: { name: null } });
   } catch (e) {

@@ -1,1 +1,1 @@
-const g = require('./generateFromList');
+require('./generateFromList');
