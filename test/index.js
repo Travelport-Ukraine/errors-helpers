@@ -29,6 +29,12 @@ describe('Generators', () => {
       expect(BarError).to.be.a('Function');
       expect(BarError.name).to.equal('BarError');
     });
+    it('should fail if baseType is not an error', () => {
+      const createErrorWithBadBaseType = () => {
+        return createErrorClass('BarError', BAR_ERROR_MESSAGE, {});
+      };
+      expect(createErrorWithBadBaseType).to.throw(Error);
+    });
     it('should create error instance without data', () => {
       const BarError = createErrorClass('BarError', BAR_ERROR_MESSAGE);
       const be = new BarError();

@@ -1,6 +1,11 @@
 const util = require('util');
 
 const errorFactory = (name, message, baseType) => {
+  if (baseType) {
+    if ((typeof baseType) !== 'function' || (!(baseType.prototype instanceof Error))) {
+      throw new Error('baseType prototype should be an instance of Error');
+    }
+  }
   const baseTypeName = baseType ? baseType.name : 'Error';
 
   /* eslint-disable prefer-template */
