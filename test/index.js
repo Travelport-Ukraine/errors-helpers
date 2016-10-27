@@ -1,10 +1,10 @@
 const expect = require('chai').expect;
-const createErrorClass = require('../').createErrorClass;
-const createErrorsList = require('../').createErrorsList;
-const getErrorFullName = require('../').helpers.getFullName;
-const getErrorObject = require('../').helpers.getObject;
-const getErrorFullStack = require('../').helpers.getFullStack;
-const errorHasErrorClass = require('../').helpers.hasErrorClass;
+const createErrorClass = require('../src').createErrorClass;
+const createErrorsList = require('../src').createErrorsList;
+const getErrorFullName = require('../src').helpers.getFullName;
+const getErrorObject = require('../src').helpers.getObject;
+const getErrorFullStack = require('../src').helpers.getFullStack;
+const errorHasErrorClass = require('../src').helpers.hasErrorClass;
 
 const BAR_ERROR_MESSAGE = 'Bar error has occured';
 const BARTENDER_ERROR_MESSAGE = 'Bartender error has occured';
