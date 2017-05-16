@@ -18,7 +18,9 @@ const errorFactory = (name, message, baseType) => {
     'if (p) {' +
       'this.causedBy = p;' +
     '}' +
-    'Error.captureStackTrace(this, this.constructor);' +
+    'if (Error.captureStackTrace) {' +
+      'Error.captureStackTrace(this, this.constructor);' +
+    '}' +
   '}';
   /* eslint-enable prefer-template */
 
