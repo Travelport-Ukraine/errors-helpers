@@ -21,6 +21,14 @@ const BAR_ERRORS_LIST = {
   NO_WATER: 'No water available',
   BARTNENDERS_BUSY: 'All bartenders are busy',
 };
+const ADVANCED_ERRORS_LIST = {
+  BadRequest: ['Bad Request', 400],
+  Unauthorized: ['Unauthorized', 401],
+  Forbidden: ['Forbidden', 403],
+  NotFound: ['NotFound', 404],
+  MethodNotAllowed: ['MethodNotAllowed', 405],
+  InternalServerError: ['InternalServerError', 500],
+};
 
 describe('Generators', () => {
   describe('#createErrorClass', () => {
@@ -97,7 +105,7 @@ describe('Generators', () => {
       expect(list['RAKE']).to.be.a('Function');
       expect(list['RAKE'].name).to.equal('RAKE');
     });
-    it('should create error from the list created', () => {
+    it('should create error from a list', () => {
       const list = createErrorsList(SIMPLE_ERRORS_LIST);
       const be = new list.RAKE();
       expect(be).to.be.an.instanceOf(Error);
@@ -106,6 +114,30 @@ describe('Generators', () => {
       expect(be.name).to.equal('Error.RAKE');
       expect(be.__proto__.name).to.equal('RAKE');
       expect(be.data).to.equal(null);
+    });
+    it('should create error from a list with codes', () => {
+      const list = createErrorsList(ADVANCED_ERRORS_LIST);
+
+      const be1 = new list.BadRequest();
+      expect(be1.name).to.equal('Error.BadRequest');
+      expect(be1.code).to.equal(400);
+
+      const be2 = new list.Unauthorized();
+      expect(be2.name).to.equal('Error.Unauthorized');
+      expect(be2.code).to.equal(401);
+
+      const be3 = new list.InternalServerError();
+      expect(be3.name).to.equal('Error.InternalServerError');
+      expect(be3.code).to.equal(500);
+    });
+    it('should not create error with non-int code', () => {
+      expect(createErrorsList.bind(null, {
+        BadRequest: ['Bad Request', '500'],
+      })).to.throw();
+
+      expect(createErrorsList.bind(null, {
+        BadRequest: ['Bad Request', { code: 500 }],
+      })).to.throw();
     });
     it('should create errors list inherited from custom error', () => {
       const BarError = createErrorClass('BarError', BAR_ERROR_MESSAGE);
@@ -217,7 +249,6 @@ describe('Helpers', () => {
       expect(eo).to.have.keys(['causedBy', 'name', 'message', 'stack', 'data']);
       expect(eo.causedBy).to.ok;
       expect(eo.causedBy.name).to.equal('Error.BarError');
-
     });
   });
 });
