@@ -37,6 +37,19 @@ describe('Generators', () => {
       expect(BarError).to.be.a('Function');
       expect(BarError.name).to.equal('BarError');
     });
+    it('should create error class with statusCode and its descendants', () => {
+      const BadError = createErrorClass('BadError', ['Bad error happened', 501]);
+      expect(BadError).to.be.a('Function');
+      expect(BadError.name).to.equal('BadError');
+
+      const instance = new BadError();
+      expect(instance.statusCode).to.equal(501);
+
+      const VeryBadError = createErrorClass('VeryBadError', 'Very bad error', BadError);
+
+      const instance2 = new VeryBadError();
+      expect(instance2.statusCode).to.equal(501);
+    });
     it('should create error class if Error passed explicitely', () => {
       const BarError = createErrorClass('BarError', BAR_ERROR_MESSAGE, Error);
       expect(BarError).to.be.a('Function');
@@ -115,7 +128,7 @@ describe('Generators', () => {
       expect(be.__proto__.name).to.equal('RAKE');
       expect(be.data).to.equal(null);
     });
-    it('should create error from a list with codes', () => {
+    it('should create error from a list with statusCodes', () => {
       const list = createErrorsList(ADVANCED_ERRORS_LIST);
 
       const be1 = new list.BadRequest();
@@ -130,7 +143,7 @@ describe('Generators', () => {
       expect(be3.name).to.equal('Error.InternalServerError');
       expect(be3.statusCode).to.equal(500);
     });
-    it('should not create error with non-int code', () => {
+    it('should not create error with non-int statusCode', () => {
       expect(createErrorsList.bind(null, {
         BadRequest: ['Bad Request', '500'],
       })).to.throw();
@@ -219,13 +232,19 @@ describe('Helpers', () => {
   });
   describe('#getObject', () => {
     it('should return object for default Error', () => {
-      const eo = getErrorObject(new Error());
+      const err = new Error();
+      const eo = getErrorObject(err);
       expect(eo).to.be.an('object');
       expect(eo).to.have.all.keys(['name', 'message', 'stack', 'data']);
       expect(eo.data).to.equal(null);
       expect(eo.name).to.equal('Error');
       expect(eo.message).to.equal('');
       expect(eo.stack).to.be.ok;
+
+      err.statusCode = 401;
+      const eo2 = getErrorObject(err);
+      expect(eo2).to.have.all.keys(['name', 'message', 'stack', 'data', 'statusCode']);
+      expect(eo2.statusCode).to.equal(401);
     });
     it('should return object for custom Error', () => {
       const data = { name: 'value' };

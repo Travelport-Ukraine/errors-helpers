@@ -6,7 +6,13 @@ const errorFactory = (name, parameters, baseType) => {
       throw new Error('baseType prototype should be an instance of Error');
     }
   }
-  const [message, statusCode] = Array.isArray(parameters) ? parameters : [parameters];
+  const [
+    message,
+    statusCode = (baseType ? baseType.statusCode : undefined),
+  ] = Array.isArray(parameters)
+    ? parameters
+    : [parameters];
+
   const baseTypeName = baseType ? baseType.name : 'Error';
 
   /* eslint-disable prefer-template */
