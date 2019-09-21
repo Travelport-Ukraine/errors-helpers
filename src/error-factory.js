@@ -6,7 +6,7 @@ const errorFactory = (name, parameters, baseType) => {
       throw new Error('baseType prototype should be an instance of Error');
     }
   }
-  const [message, code] = Array.isArray(parameters) ? parameters : [parameters];
+  const [message, statusCode] = Array.isArray(parameters) ? parameters : [parameters];
   const baseTypeName = baseType ? baseType.name : 'Error';
 
   /* eslint-disable prefer-template */
@@ -33,12 +33,12 @@ const errorFactory = (name, parameters, baseType) => {
   CustomError.prototype.name = name;
   CustomError.prototype.message = message;
 
-  if (code) {
-    if (!Number.isInteger(code) || code < 0) {
-      throw new Error(`${name} error code should be a positive integer, but it is ${typeof code}.`);
+  if (statusCode) {
+    if (!Number.isInteger(statusCode) || statusCode < 0) {
+      throw new Error(`${name} error code should be a positive integer, but it is ${typeof statusCode}.`);
     }
 
-    CustomError.prototype.code = code;
+    CustomError.prototype.statusCode = statusCode;
   }
 
   return CustomError;

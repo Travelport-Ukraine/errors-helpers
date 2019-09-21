@@ -120,15 +120,15 @@ describe('Generators', () => {
 
       const be1 = new list.BadRequest();
       expect(be1.name).to.equal('Error.BadRequest');
-      expect(be1.code).to.equal(400);
+      expect(be1.statusCode).to.equal(400);
 
       const be2 = new list.Unauthorized();
       expect(be2.name).to.equal('Error.Unauthorized');
-      expect(be2.code).to.equal(401);
+      expect(be2.statusCode).to.equal(401);
 
       const be3 = new list.InternalServerError();
       expect(be3.name).to.equal('Error.InternalServerError');
-      expect(be3.code).to.equal(500);
+      expect(be3.statusCode).to.equal(500);
     });
     it('should not create error with non-int code', () => {
       expect(createErrorsList.bind(null, {
