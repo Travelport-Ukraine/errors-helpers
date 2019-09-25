@@ -5,6 +5,9 @@ const getObject = err => Object.assign({
   stack: err.stack,
 }, err.causedBy ? {
   causedBy: getObject(err.causedBy),
+} : {},
+err.statusCode ? {
+  statusCode: err.statusCode,
 } : {});
 
 module.exports = getObject;

@@ -1,11 +1,18 @@
 const util = require('util');
 
-const errorFactory = (name, message, baseType) => {
+const errorFactory = (name, parameters, baseType) => {
   if (baseType && baseType !== Error) {
     if ((typeof baseType) !== 'function' || (!(baseType.prototype instanceof Error))) {
       throw new Error('baseType prototype should be an instance of Error');
     }
   }
+  const [
+    message,
+    statusCode = (baseType ? baseType.statusCode : undefined),
+  ] = Array.isArray(parameters)
+    ? parameters
+    : [parameters];
+
   const baseTypeName = baseType ? baseType.name : 'Error';
 
   /* eslint-disable prefer-template */
@@ -31,6 +38,14 @@ const errorFactory = (name, message, baseType) => {
   util.inherits(CustomError, baseType || Error);
   CustomError.prototype.name = name;
   CustomError.prototype.message = message;
+
+  if (statusCode) {
+    if (!Number.isInteger(statusCode) || statusCode < 0) {
+      throw new Error(`${name} error code should be a positive integer, but it is ${typeof statusCode}.`);
+    }
+
+    CustomError.prototype.statusCode = statusCode;
+  }
 
   return CustomError;
 };
