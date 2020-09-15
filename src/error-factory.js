@@ -22,7 +22,7 @@ const errorFactory = (name, parameters, baseType) => {
     '}' +
     `this.name = '${baseTypeName}.${name}';` +
     'this.data = d || null;' +
-    `this.statusCode = ${!!statusCode || 'this.statusCode'};` +
+    `this.statusCode = ${statusCode || 'this.statusCode'};` +
     'if (p) {' +
       'this.causedBy = p;' +
     '}' +

@@ -68,7 +68,7 @@ describe('Generators', () => {
       expect(be).to.be.an.instanceOf(BarError);
       expect(be.stack).to.be.ok;
       expect(be.message).to.equal(BAR_ERROR_MESSAGE);
-      expect(be).to.have.all.keys(['name', 'data']);
+      expect(be).to.have.all.keys(['name', 'data', 'statusCode']);
       expect(be.name).to.equal('Error.BarError');
       expect(be.__proto__.name).to.equal('BarError');
       expect(be.data).to.equal(null);
@@ -80,7 +80,7 @@ describe('Generators', () => {
       expect(be).to.be.an.instanceOf(BarError);
       expect(be.stack).to.be.ok;
       expect(be.message).to.equal(BAR_ERROR_MESSAGE);
-      expect(be).to.have.all.keys(['name', 'data']);
+      expect(be).to.have.all.keys(['name', 'data', 'statusCode']);
       expect(be.data).to.be.an('Object');
       expect(be.data).to.have.all.keys(Object.keys(BAR_ERROR_DATA));
     });
@@ -91,7 +91,7 @@ describe('Generators', () => {
       expect(be).to.be.an.instanceOf(BarError);
       expect(be.stack).to.be.ok;
       expect(be.message).to.equal(BAR_ERROR_MESSAGE);
-      expect(be).to.have.all.keys(['name', 'data', 'causedBy']);
+      expect(be).to.have.all.keys(['name', 'data', 'causedBy', 'statusCode']);
       expect(be.name).to.equal('Error.BarError');
       expect(be.__proto__.name).to.equal('BarError');
       expect(typeof be.causedBy).to.equal('object');
@@ -105,7 +105,7 @@ describe('Generators', () => {
       expect(be).to.be.an.instanceOf(BartenderError);
       expect(be.stack).to.be.ok;
       expect(be.message).to.equal(BARTENDER_ERROR_MESSAGE);
-      expect(be).to.have.all.keys(['name', 'data']);
+      expect(be).to.have.all.keys(['name', 'data', 'statusCode']);
       expect(be.name).to.equal('BarError.BartenderError');
       expect(be.__proto__.name).to.equal('BartenderError');
       expect(be.data).to.equal(null);
@@ -123,7 +123,7 @@ describe('Generators', () => {
       const be = new list.RAKE();
       expect(be).to.be.an.instanceOf(Error);
       expect(be).to.be.an.instanceOf(list.RAKE);
-      expect(be).to.have.all.keys(['name', 'data']);
+      expect(be).to.have.all.keys(['name', 'data', 'statusCode']);
       expect(be.name).to.equal('Error.RAKE');
       expect(be.__proto__.name).to.equal('RAKE');
       expect(be.data).to.equal(null);
@@ -161,7 +161,7 @@ describe('Generators', () => {
       const be = new list.BARTNENDERS_BUSY();
       expect(be).to.be.an.instanceOf(Error);
       expect(be).to.be.an.instanceOf(list.BARTNENDERS_BUSY);
-      expect(be).to.have.all.keys(['name', 'data']);
+      expect(be).to.have.all.keys(['name', 'data', 'statusCode']);
       expect(be.name).to.equal('BarError.BARTNENDERS_BUSY');
       expect(be.__proto__.name).to.equal('BARTNENDERS_BUSY');
       expect(be.data).to.equal(null);
