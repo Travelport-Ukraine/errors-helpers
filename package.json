@@ -1,6 +1,6 @@
 {
   "name": "node-errors-helpers",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Some helpers for better error handling in Node.js",
   "main": "src/index.js",
   "files": [
