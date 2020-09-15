@@ -8,12 +8,12 @@ const errorFactory = (name, parameters, baseType) => {
   }
   const [
     message,
-    statusCode = (baseType ? baseType.statusCode : undefined),
+    statusCode = (baseType ? baseType.prototype.statusCode : undefined),
   ] = Array.isArray(parameters)
     ? parameters
     : [parameters];
 
-  const baseTypeName = baseType ? baseType.name : 'Error';
+  const baseTypeName = baseType ? baseType.prototype.name : 'Error';
 
   /* eslint-disable prefer-template */
   const fnBody = `return function ${name} (d, p) {` +
