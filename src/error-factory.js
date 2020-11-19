@@ -16,20 +16,23 @@ const errorFactory = (name, parameters, baseType) => {
   const baseTypeName = baseType ? baseType.prototype.name : 'Error';
 
   /* eslint-disable prefer-template */
-  const fnBody = `return function ${name} (d, p) {` +
-    `if (!(this instanceof ${name})) {` +
-      `return new ${name}(d, p);` +
-    '}' +
-    `this.name = '${baseTypeName}.${name}';` +
-    'this.data = d || null;' +
-    `this.statusCode = ${statusCode || 'this.statusCode'};` +
-    'if (p) {' +
-      'this.causedBy = p;' +
-    '}' +
-    'if (Error.captureStackTrace) {' +
-      'Error.captureStackTrace(this, this.constructor);' +
-    '}' +
-  '}';
+  const fnBody = `return function ${name} (d, p) {`
+    + `if (!(this instanceof ${name})) {`
+      + `return new ${name}(d, p);`
+    + '}'
+    + `this.name = '${baseTypeName}.${name}';`
+    + 'this.data = d || null;'
+    + `this.statusCode = ${statusCode || 'this.statusCode'};`
+    + 'if (p) {'
+      + 'this.causedBy = p;'
+    + '}'
+    + 'if (Error.captureStackTrace) {'
+      + 'Error.captureStackTrace(this, this.constructor);'
+      + 'if (p) {'
+        + 'this.stack = this.stack.split(\'\\n\').slice(0, 2).join(\'\\n\') + \'\\n\' + p.stack;'
+      + '}'
+    + '}'
+  + '}';
   /* eslint-enable prefer-template */
 
   /* eslint-disable no-new-func */

@@ -1,6 +1,9 @@
-const expect = require('chai').expect;
-const createErrorClass = require('../src').createErrorClass;
-const createErrorsList = require('../src').createErrorsList;
+/*
+  eslint-disable no-proto
+*/
+
+const { expect } = require('chai');
+const { createErrorClass, createErrorsList } = require('../src');
 const getErrorFullName = require('../src').helpers.getFullName;
 const getErrorObject = require('../src').helpers.getObject;
 const getErrorFullStack = require('../src').helpers.getFullStack;
@@ -10,7 +13,7 @@ const BAR_ERROR_MESSAGE = 'Bar error has occured';
 const BARTENDER_ERROR_MESSAGE = 'Bartender error has occured';
 const BAR_ERROR_DATA = {
   somevar: 'someval',
-  anothervar: 'anotherval'
+  anothervar: 'anotherval',
 };
 const SIMPLE_ERRORS_LIST = {
   RAKE: 'You stepped on a rake',
@@ -56,9 +59,7 @@ describe('Generators', () => {
       expect(BarError.name).to.equal('BarError');
     });
     it('should fail if baseType is not an error', () => {
-      const createErrorWithBadBaseType = () => {
-        return createErrorClass('BarError', BAR_ERROR_MESSAGE, {});
-      };
+      const createErrorWithBadBaseType = () => createErrorClass('BarError', BAR_ERROR_MESSAGE, {});
       expect(createErrorWithBadBaseType).to.throw(Error);
     });
     it('should create error instance without data', () => {
@@ -66,19 +67,34 @@ describe('Generators', () => {
       const be = new BarError();
       expect(be).to.be.an.instanceOf(Error);
       expect(be).to.be.an.instanceOf(BarError);
-      expect(be.stack).to.be.ok;
+      expect(be.stack).to.be.a('string');
       expect(be.message).to.equal(BAR_ERROR_MESSAGE);
       expect(be).to.have.all.keys(['name', 'data', 'statusCode']);
       expect(be.name).to.equal('Error.BarError');
       expect(be.__proto__.name).to.equal('BarError');
       expect(be.data).to.equal(null);
     });
+    it('should return combined stack', () => {
+      const BarError = createErrorClass('BarError', BAR_ERROR_MESSAGE);
+      const BartenderError = createErrorClass('BartenderError', BARTENDER_ERROR_MESSAGE, BarError);
+      try {
+        throw new BarError({ x: 'y' });
+      } catch (e1) {
+        try {
+          throw new BartenderError({ a: 'b' }, e1);
+        } catch (e2) {
+          const { stack } = e2;
+          expect(stack).to.include('Bartender error has occured');
+          expect(stack).to.include('Bar error has occured');
+        }
+      }
+    });
     it('should create error instance with data', () => {
       const BarError = createErrorClass('BarError', BAR_ERROR_MESSAGE);
       const be = new BarError(BAR_ERROR_DATA);
       expect(be).to.be.an.instanceOf(Error);
       expect(be).to.be.an.instanceOf(BarError);
-      expect(be.stack).to.be.ok;
+      expect(be.stack).to.be.a('string');
       expect(be.message).to.equal(BAR_ERROR_MESSAGE);
       expect(be).to.have.all.keys(['name', 'data', 'statusCode']);
       expect(be.data).to.be.an('Object');
@@ -89,7 +105,7 @@ describe('Generators', () => {
       const be = new BarError(null, new Error('Security error'));
       expect(be).to.be.an.instanceOf(Error);
       expect(be).to.be.an.instanceOf(BarError);
-      expect(be.stack).to.be.ok;
+      expect(be.stack).to.be.a('string');
       expect(be.message).to.equal(BAR_ERROR_MESSAGE);
       expect(be).to.have.all.keys(['name', 'data', 'causedBy', 'statusCode']);
       expect(be.name).to.equal('Error.BarError');
@@ -103,7 +119,7 @@ describe('Generators', () => {
       expect(be).to.be.an.instanceOf(Error);
       expect(be).to.be.an.instanceOf(BarError);
       expect(be).to.be.an.instanceOf(BartenderError);
-      expect(be.stack).to.be.ok;
+      expect(be.stack).to.be.a('string');
       expect(be.message).to.equal(BARTENDER_ERROR_MESSAGE);
       expect(be).to.have.all.keys(['name', 'data', 'statusCode']);
       expect(be.name).to.equal('BarError.BartenderError');
@@ -115,8 +131,8 @@ describe('Generators', () => {
     it('should create errors list inherited from Error', () => {
       const list = createErrorsList(SIMPLE_ERRORS_LIST);
       expect(list).to.have.all.keys(Object.keys(SIMPLE_ERRORS_LIST));
-      expect(list['RAKE']).to.be.a('Function');
-      expect(list['RAKE'].name).to.equal('RAKE');
+      expect(list.RAKE).to.be.a('Function');
+      expect(list.RAKE.name).to.equal('RAKE');
     });
     it('should create error from a list', () => {
       const list = createErrorsList(SIMPLE_ERRORS_LIST);
@@ -156,8 +172,8 @@ describe('Generators', () => {
       const BarError = createErrorClass('BarError', BAR_ERROR_MESSAGE);
       const list = createErrorsList(BAR_ERRORS_LIST, BarError);
       expect(list).to.have.all.keys(Object.keys(BAR_ERRORS_LIST));
-      expect(list['BARTNENDERS_BUSY']).to.be.a('Function');
-      expect(list['BARTNENDERS_BUSY'].name).to.equal('BARTNENDERS_BUSY');
+      expect(list.BARTNENDERS_BUSY).to.be.a('Function');
+      expect(list.BARTNENDERS_BUSY.name).to.equal('BARTNENDERS_BUSY');
       const be = new list.BARTNENDERS_BUSY();
       expect(be).to.be.an.instanceOf(Error);
       expect(be).to.be.an.instanceOf(list.BARTNENDERS_BUSY);
@@ -239,7 +255,7 @@ describe('Helpers', () => {
       expect(eo.data).to.equal(null);
       expect(eo.name).to.equal('Error');
       expect(eo.message).to.equal('');
-      expect(eo.stack).to.be.ok;
+      expect(eo.stack).to.be.a('string');
 
       err.statusCode = 401;
       const eo2 = getErrorObject(err);
@@ -256,7 +272,7 @@ describe('Helpers', () => {
       expect(eo.data).to.equal(data);
       expect(eo.name).to.equal('BarError.BartenderError');
       expect(eo.message).to.equal(BARTENDER_ERROR_MESSAGE);
-      expect(eo.stack).to.be.ok;
+      expect(eo.stack).to.be.a('string');
     });
     it('should return object with causedBy field', () => {
       const data = { name: 'value' };
@@ -266,7 +282,7 @@ describe('Helpers', () => {
       const eo = getErrorObject(new BartenderError(data, someError));
       expect(eo).to.be.an('object');
       expect(eo).to.have.keys(['causedBy', 'name', 'message', 'stack', 'data']);
-      expect(eo.causedBy).to.ok;
+      expect(eo.causedBy).to.be.an('object');
       expect(eo.causedBy.name).to.equal('Error.BarError');
     });
   });

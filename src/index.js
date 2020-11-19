@@ -5,6 +5,8 @@ const getObject = require('./helpers/get-object');
 const getFullStack = require('./helpers/get-full-stack');
 const hasErrorClass = require('./helpers/has-error-class');
 
+Error.stackTraceLimit = Infinity;
+
 module.exports = {
   createErrorClass,
   createErrorsList,
