@@ -29,4 +29,3 @@ try {
   // e instanceof RuntimeError; // true
   helpers.hasErrorClass(e, ValidationError); // true
 }
-
