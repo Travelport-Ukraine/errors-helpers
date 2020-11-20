@@ -1,6 +1,27 @@
 {
-  "extends": "airbnb",
+  "extends": "airbnb-base",
+  "env": {
+    "mocha": true
+  },
+  "plugins": [
+    "import"
+  ],
   "rules": {
-      "no-console": 0
+    "no-console": 0,
+    "max-len": ["error", 100, 2, {
+      "ignoreRegExpLiterals": true,
+      "ignoreUrls": true,
+      "ignoreComments": false,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true
+    }],
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": ["**/*.test.js", "**/*.spec.js", "**/*.mock.js"]
+    }],
+    "comma-dangle": ["error", {
+      "functions": "never",
+      "objects": "always-multiline",
+      "arrays": "always-multiline"
+    }]
   }
 }
