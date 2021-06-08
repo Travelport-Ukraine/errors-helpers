@@ -1,6 +1,6 @@
 {
   "name": "node-errors-helpers",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Some helpers for better error handling in Node.js",
   "main": "src/index.js",
   "files": [
@@ -23,7 +23,8 @@
   ],
   "author": "Mark Orel <mail.ormark@gmail.com>",
   "contributors": [
-    "Dmitry Chertousov <d.chertousov@gmail.com>"
+    "Dmitry Chertousov <d.chertousov@gmail.com>",
+    "Mark Omarov <dev.mark.omarov@gmail.com"
   ],
   "license": "MIT",
   "devDependencies": {
