@@ -1,7 +1,7 @@
 const errorFactory = require('./error-factory');
 
-const errorsListFactory = (list, extend) => Object.keys(list).reduce((obj, key) => {
-  const error = errorFactory(key, list[key], extend);
+const errorsListFactory = source => (list, extend) => Object.keys(list).reduce((obj, key) => {
+  const error = errorFactory(source)(key, list[key], extend);
   Object.assign(obj, {
     [key]: error,
   });

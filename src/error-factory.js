@@ -1,6 +1,6 @@
 const util = require('util');
 
-const errorFactory = (name, parameters, baseType) => {
+const errorFactory = source => (name, parameters, baseType) => {
   if (baseType && baseType !== Error) {
     if ((typeof baseType) !== 'function' || (!(baseType.prototype instanceof Error))) {
       throw new Error('baseType prototype should be an instance of Error');
@@ -21,6 +21,7 @@ const errorFactory = (name, parameters, baseType) => {
       + `return new ${name}(d, p);`
     + '}'
     + `this.name = '${baseTypeName}.${name}';`
+    + `this.source = '${source}';`
     + 'this.data = d || null;'
     + `this.statusCode = ${statusCode || 'this.statusCode'};`
     + 'if (p) {'
@@ -41,6 +42,7 @@ const errorFactory = (name, parameters, baseType) => {
 
   util.inherits(CustomError, baseType || Error);
   CustomError.prototype.name = name;
+  CustomError.prototype.source = source;
   CustomError.prototype.message = message;
 
   if (statusCode) {

@@ -1,6 +1,7 @@
 const getObject = err => Object.assign({
   name: err.name,
   message: err.message,
+  source: err.source,
   data: err.data || null,
   stack: err.stack,
 }, err.causedBy ? {

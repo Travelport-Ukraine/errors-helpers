@@ -1,4 +1,4 @@
-const { createErrorClass, createErrorsList, helpers } = require('../');
+const { createErrorClass, createErrorsList, helpers } = require('../src')('optional-custom-source');
 
 const RuntimeError = createErrorClass('RuntimeError', 'Error during validation.', Error);
 const ValidationError = createErrorClass('ValidationError', 'Error during validation.', Error);

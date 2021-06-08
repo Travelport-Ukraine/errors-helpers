@@ -7,13 +7,13 @@ const hasErrorClass = require('./helpers/has-error-class');
 
 Error.stackTraceLimit = Infinity;
 
-module.exports = {
-  createErrorClass,
-  createErrorsList,
+module.exports = (source = 'node-errors-helpers') => ({
+  createErrorClass: createErrorClass(source),
+  createErrorsList: createErrorsList(source),
   helpers: {
     getFullName,
     getObject,
     getFullStack,
     hasErrorClass,
   },
-};
+});
