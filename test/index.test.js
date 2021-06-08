@@ -73,7 +73,7 @@ describe('Generators', () => {
       expect(be.name).to.equal('Error.BarError');
       expect(be.__proto__.name).to.equal('BarError');
       expect(be.data).to.equal(null);
-      expect(be.source).to.equal('node-error-helpers');
+      expect(be.source).to.equal('node-errors-helpers');
     });
     it('should return combined stack', () => {
       const BarError = createErrorClass('BarError', BAR_ERROR_MESSAGE);
@@ -100,7 +100,7 @@ describe('Generators', () => {
       expect(be).to.have.all.keys(['name', 'data', 'source', 'statusCode']);
       expect(be.data).to.be.an('Object');
       expect(be.data).to.have.all.keys(Object.keys(BAR_ERROR_DATA));
-      expect(be.source).to.equal('node-error-helpers');
+      expect(be.source).to.equal('node-errors-helpers');
     });
     it('should create error caused by another error', () => {
       const BarError = createErrorClass('BarError', BAR_ERROR_MESSAGE);
@@ -113,7 +113,7 @@ describe('Generators', () => {
       expect(be.name).to.equal('Error.BarError');
       expect(be.__proto__.name).to.equal('BarError');
       expect(typeof be.causedBy).to.equal('object');
-      expect(be.source).to.equal('node-error-helpers');
+      expect(be.source).to.equal('node-errors-helpers');
     });
     it('should create inherited instance', () => {
       const BarError = createErrorClass('BarError', BAR_ERROR_MESSAGE);
@@ -128,7 +128,7 @@ describe('Generators', () => {
       expect(be.name).to.equal('BarError.BartenderError');
       expect(be.__proto__.name).to.equal('BartenderError');
       expect(be.data).to.equal(null);
-      expect(be.source).to.equal('node-error-helpers');
+      expect(be.source).to.equal('node-errors-helpers');
     });
   });
   describe('#createErrorsList', () => {
@@ -147,7 +147,7 @@ describe('Generators', () => {
       expect(be.name).to.equal('Error.RAKE');
       expect(be.__proto__.name).to.equal('RAKE');
       expect(be.data).to.equal(null);
-      expect(be.source).to.equal('node-error-helpers');
+      expect(be.source).to.equal('node-errors-helpers');
     });
     it('should create error from a list with statusCodes', () => {
       const list = createErrorsList(ADVANCED_ERRORS_LIST);
@@ -186,7 +186,7 @@ describe('Generators', () => {
       expect(be.name).to.equal('BarError.BARTNENDERS_BUSY');
       expect(be.__proto__.name).to.equal('BARTNENDERS_BUSY');
       expect(be.data).to.equal(null);
-      expect(be.source).to.equal('node-error-helpers');
+      expect(be.source).to.equal('node-errors-helpers');
     });
     it('should create error class with custom source', () => {
       // eslint-disable-next-line global-require
@@ -289,7 +289,7 @@ describe('Helpers', () => {
       expect(eo.name).to.equal('BarError.BartenderError');
       expect(eo.message).to.equal(BARTENDER_ERROR_MESSAGE);
       expect(eo.stack).to.be.a('string');
-      expect(eo.source).to.equal('node-error-helpers');
+      expect(eo.source).to.equal('node-errors-helpers');
     });
     it('should return object with causedBy field', () => {
       const data = { name: 'value' };
@@ -301,7 +301,7 @@ describe('Helpers', () => {
       expect(eo).to.have.keys(['causedBy', 'name', 'message', 'source', 'stack', 'data']);
       expect(eo.causedBy).to.be.an('object');
       expect(eo.causedBy.name).to.equal('Error.BarError');
-      expect(eo.source).to.equal('node-error-helpers');
+      expect(eo.source).to.equal('node-errors-helpers');
     });
   });
 });
