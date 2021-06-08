@@ -21,6 +21,7 @@ const errorFactory = source => (name, parameters, baseType) => {
       + `return new ${name}(d, p);`
     + '}'
     + `this.name = '${baseTypeName}.${name}';`
+    + `this.source = '${source}';`
     + 'this.data = d || null;'
     + `this.statusCode = ${statusCode || 'this.statusCode'};`
     + 'if (p) {'
